@@ -1,0 +1,22 @@
+{
+  "name": "Trip dispatch validates fleet assignment rules",
+  "instruction": "Trip creation must validate vehicle availability, driver availability, driver license validity, and cargo capacity before dispatching a trip.",
+  "relevant_when": "JavaScript controller file that defines the createTrip handler or creates Trip records from request body vehicle, driver, and cargo data.",
+  "context": "README.md and backend/API_DOCUMENTATION.md document trip dispatch rules: vehicles must be Available, drivers must be Off Duty with a non-expired license, and cargo weight must not exceed vehicle capacity. Catching omissions prevents invalid dispatches from reaching production.",
+  "scope": "file",
+  "scope_reason": "The trip creation handler contains the complete dispatch validation flow and the resource status updates for the created trip.",
+  "checklist": [
+    {
+      "name": "availability-and-license-checked",
+      "rule": "When the file defines trip creation from a selected vehicle and driver, it checks that the vehicle is Available, the driver is not already On Duty or Suspended, and the driver license is not expired before creating or dispatching the trip; return not applicable if the file does not define trip creation."
+    },
+    {
+      "name": "cargo-capacity-checked",
+      "rule": "When the file defines trip creation with cargo weight and vehicle capacity data, it rejects cargo that exceeds the selected vehicle capacity before creating or dispatching the trip; return not applicable if the file does not define trip creation."
+    },
+    {
+      "name": "dispatch-statuses-updated",
+      "rule": "When a trip is successfully created or dispatched, the same flow sets the trip status to Dispatched, the vehicle status to On Trip, and the driver status to On Duty; return not applicable if the file does not define trip creation."
+    }
+  ]
+}

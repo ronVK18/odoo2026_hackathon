@@ -1,0 +1,18 @@
+{
+  "name": "Trip terminal states release assigned resources",
+  "instruction": "Trip completion, cancellation, or deletion of an active dispatched trip must release the assigned vehicle and driver back to availability.",
+  "relevant_when": "JavaScript controller file that defines trip status updates, trip completion or cancellation, or trip deletion for dispatched trips.",
+  "context": "README.md and backend/API_DOCUMENTATION.md document that completed or cancelled trips set the vehicle to Available and the driver to Off Duty. The current controller also releases resources when deleting an active dispatched trip.",
+  "scope": "file",
+  "scope_reason": "Trip status and deletion handlers contain the complete evidence for releasing vehicles and drivers after terminal trip transitions.",
+  "checklist": [
+    {
+      "name": "terminal-status-releases-resources",
+      "rule": "When the file defines a handler that changes a trip to Completed or Cancelled, the handler also sets the assigned vehicle status to Available, clears the vehicle driver assignment, sets the assigned driver status to Off Duty, and clears the driver vehicle assignment; return not applicable if the file does not define trip terminal-status handling."
+    },
+    {
+      "name": "dispatched-delete-releases-resources",
+      "rule": "When the file defines deletion of a Dispatched trip, the handler releases the assigned vehicle and driver instead of leaving them marked as in use; return not applicable if the file does not define deletion of dispatched trips."
+    }
+  ]
+}

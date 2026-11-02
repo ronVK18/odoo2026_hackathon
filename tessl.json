@@ -1,0 +1,28 @@
+{
+  "verify": {
+    "groups": {
+      "backend-business-rules": {
+        "path": "verifiers/backend-business-rules/*.json",
+        "level": "error",
+        "include": [
+          "backend/controllers/**/*.js"
+        ],
+        "exclude": [
+          "backend/test-server.js",
+          "backend/seed.js"
+        ],
+        "verifiers": {
+          "trip-dispatch-validation": {
+            "include": ["backend/controllers/tripController.js"]
+          },
+          "trip-resource-release": {
+            "include": ["backend/controllers/tripController.js"]
+          },
+          "maintenance-status-transitions": {
+            "include": ["backend/controllers/maintenanceController.js"]
+          }
+        }
+      }
+    }
+  }
+}

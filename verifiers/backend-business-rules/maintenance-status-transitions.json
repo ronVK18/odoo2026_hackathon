@@ -1,0 +1,22 @@
+{
+  "name": "Maintenance updates vehicle shop status",
+  "instruction": "Maintenance lifecycle handlers must keep the vehicle status in sync with whether maintenance is in progress or complete.",
+  "relevant_when": "JavaScript controller file that creates, completes, updates, or deletes Maintenance records and has access to the related Vehicle model.",
+  "context": "README.md and backend/API_DOCUMENTATION.md document maintenance auto-status behavior: creating a maintenance log moves the vehicle to In Shop, and completing maintenance returns the vehicle to Available.",
+  "scope": "file",
+  "scope_reason": "The maintenance controller contains the maintenance creation, completion, and deletion flows that own vehicle shop status transitions.",
+  "checklist": [
+    {
+      "name": "creation-marks-in-shop",
+      "rule": "When the file defines maintenance log creation, that flow finds the related vehicle and sets its status to In Shop after creating the in-progress maintenance log; return not applicable if the file does not define maintenance creation."
+    },
+    {
+      "name": "completion-marks-available",
+      "rule": "When the file defines marking maintenance complete, that flow returns the related vehicle from In Shop to Available; return not applicable if the file does not define maintenance completion."
+    },
+    {
+      "name": "in-progress-delete-releases-vehicle",
+      "rule": "When the file defines deleting an In Progress maintenance log, that flow returns the related In Shop vehicle to Available or otherwise explicitly preserves a correct non-available status; return not applicable if the file does not define maintenance deletion."
+    }
+  ]
+}
